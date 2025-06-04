@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Combine XML – {{ today }}</title>
+    <link href="/static/tailwind.css" rel="stylesheet">
+</head>
+<body class="p-6">
+    <h1 class="text-xl font-bold mb-4">Combine XML – {{ today }}</h1>
+    {% for customer in customers %}
+    <div class="mb-4 border-b pb-2">
+        <h2 class="text-lg font-semibold">{{ customer }}</h2>
+        <div class="flex items-center gap-4">
+            {% for type in structure[customer] %}
+            <form method="post" action="/generate/{{ customer }}/{{ type }}">
+                <button class="bg-blue-500 text-white px-3 py-1 rounded">{{ labels[type] }}</button>
+            </form>
+            {% endfor %}
+            <form action="/generate_all/{{ customer }}">
+                <button class="bg-green-600 text-white px-3 py-1 rounded">Alle XLS voor {{ customer }}</button>
+            </form>
+            <span class="text-sm text-gray-500">Laatste: {{ latest_files[customer] }}</span>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="mt-6 bg-gray-100 p-4 rounded">
+        <h2 class="font-semibold mb-2">Log Output</h2>
+        <pre class="text-xs text-gray-700">
+{% for line in extra %}
+{{ line }}
+{% endfor %}
+        </pre>
+    </div>
+    <footer class="mt-8 text-center text-xs text-gray-500">
+        Demo footer – Version 10.5.13 © {{ now.year }}
+    </footer>
+</body>
+</html>
